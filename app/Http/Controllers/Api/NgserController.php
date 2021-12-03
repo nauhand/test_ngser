@@ -48,23 +48,25 @@ class NgserController extends BaseController
     {
             //get the JSON file
             $data = $this->openJSONFile();
+            $sum = 0;
 
             if (!is_numeric($id)) {
                 return $this->sendBadRequestError("Le paramètre saisi n'est pas correct");
             }
-            
-            foreach ($data as $clients) {
-                if ($id == $clients["id"]) {
-                    $sum = 0;
-                    foreach ($clients["achats"] as $vim => $value) {
-                        $sum += $clients["achats"][$vim]["prix"];
+
+            for ($i=0; $i < count($data); $i++) { 
+                if ($id != $data[$i]["id"]) {
+                    echo "Le client n'existe pas, code erreur". 404;
+             }
+            }
+
+            for ($i=0; $i < count($data); $i++) { 
+                if ($id == $data[$i]["id"]) {
+                    foreach ($data[$i]["achats"] as $vim => $value) {
+                        $sum += $data[$i]["achats"][$vim]["prix"];
                     }
                     return $this->sendResponse($sum, "Le total de vente du client " . $id);
-                }
-                else{
-                    return $this->sendNotFoundError("Le client avec l'id ". $id . " N'existe pas");
-                }
+             }
             }
     }
 }
-
