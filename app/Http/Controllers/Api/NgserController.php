@@ -56,7 +56,7 @@ class NgserController extends BaseController
 
             for ($i=0; $i < count($data); $i++) { 
                 if ($id != $data[$i]["id"]) {
-                    echo "Le client n'existe pas, code erreur". 404;
+                    return "Le client n'existe pas, code erreur". 404;
              }
             }
 
