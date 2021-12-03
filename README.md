@@ -10,3 +10,4 @@ GET : 127.0.0.1:8000/api/client-up-price | Cet URL affichera le client ayant le 
 GET : http://127.0.0.1:8000/api/client-find/{id} | Cet URL prends en paramètre l'id d'un client, et affiche le total des prix de ses articles <br> <br>
 
 Lien du projet : <br>
+https://github.com/nauhand/test_ngser
