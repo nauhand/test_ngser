@@ -26,7 +26,7 @@ class NgserController extends BaseController
                 $clientArr["client"] = $clients["client"];
             }
         }
-        
+
         return $this->sendResponse($clientArr, "Données du client avec le plus gros panier");
     }
 
@@ -54,13 +54,7 @@ class NgserController extends BaseController
                 return $this->sendBadRequestError("Le paramètre saisi n'est pas correct");
             }
 
-            for ($i=0; $i < count($data); $i++) { 
-                if ($id != $data[$i]["id"]) {
-                    return "Le client n'existe pas, code erreur". 404;
-             }
-            }
-
-            for ($i=0; $i < count($data); $i++) { 
+            for ($i=0; $i < count($data); $i++) {
                 if ($id == $data[$i]["id"]) {
                     foreach ($data[$i]["achats"] as $vim => $value) {
                         $sum += $data[$i]["achats"][$vim]["prix"];
