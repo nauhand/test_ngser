@@ -18,7 +18,7 @@ class NgserController extends BaseController
         foreach ($data as $key => $clients) {
             $sum = 0;
             foreach ($data[$key]["achats"] as $vim => $value) {
-                $sum += $data[$key]["achats"][$vim]["prix"];
+                $sum += $value["prix"];
             }
             if ($sum > $up_price) {
                 $up_price = $sum;
@@ -49,18 +49,29 @@ class NgserController extends BaseController
             //get the JSON file
             $data = $this->openJSONFile();
             $sum = 0;
+            $idArr = [];
 
             if (!is_numeric($id)) {
                 return $this->sendBadRequestError("Le paramètre saisi n'est pas correct");
             }
 
-            for ($i=0; $i < count($data); $i++) {
-                if ($id == $data[$i]["id"]) {
-                    foreach ($data[$i]["achats"] as $vim => $value) {
-                        $sum += $data[$i]["achats"][$vim]["prix"];
-                    }
-                    return $this->sendResponse($sum, "Le total de vente du client " . $id);
-             }
+            foreach ($data as $key => $value) {
+                array_push($idArr, $value["id"]);
+            }
+
+            if ( in_array($id, $idArr) ) {
+                for ($i=0; $i < count($data); $i++) {
+                    if ($id == $data[$i]["id"]) {
+                        foreach ($data[$i]["achats"] as $vim => $value) {
+                            $sum += $value["prix"];
+                        }
+                        return $this->sendResponse($sum, "Le total de vente du client " . $id);
+                 }
+                }
+            }
+            else
+            {
+                return $this->sendNotFoundError("Le client avec l'id " . $id . " n'existe pas !");
             }
     }
 }
